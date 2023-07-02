@@ -23,10 +23,14 @@ def query():
 	args = request.args
 	print(request.method)
 	if request.method == "GET":
-		return "Get: " + args.get("name", default="Sami") + " is " + args.get("age", default="4") + " years old."
+		# Needs to be query parameters
+		return {
+			"text": "Get: " + args.get("name", default="Sami") + " is " + args.get("age", default="4") + " years old.",
+		}
 	else:
+		# Can retrieve data from the body of the request - no encoding needed!
 		print(request.form)
 		print(request.data)
-		return args
+		return request.data
 
 print("Running")
