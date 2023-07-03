@@ -25,7 +25,7 @@ def query():
 	if request.method == "GET":
 		# Needs to be query parameters
 		return {
-			"text": "Get: " + args.get("name", default="Sami") + " is " + args.get("age", default="4") + " years old.",
+			"text": "Get: " + args.get("name", default="Sami") + " is " + args.get("age", default="5") + " years old.",
 		}
 	else:
 		# Can retrieve data from the body of the request - no encoding needed!

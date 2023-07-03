@@ -1,0 +1,92 @@
+<head>
+	<Title>Python API - Ep2</Title>
+	<style>
+		.results {
+			margin: auto;
+			width: 800px;
+		}
+		.container {
+			display: flex;
+			margin: auto;
+			width: 800px;
+		}
+
+		.form {
+			flex: 1;
+		}
+	</style>
+</head>
+<body>
+	<div class="results">
+		<p id="type"></p>
+		<div id="results">
+
+		</div>
+	</div>
+	<div class="container">
+		<div class="form">
+			<h3>GET Request</h3>
+			<form method="GET" action="http://127.0.0.1:5000" id="getForm">
+				<input type="text" name="name" placeholder="Name" />
+				<button type="button" onClick="getFormHandler(this.form)">Submit GET Request</button>
+			</form>
+		</div>
+		<div class="form">
+			<h3>POST Request</h3>
+			<form method="POST" action="http://127.0.0.1:5000" id="postForm">
+				<input type="text" name="name" placeholder="Name" />
+				<input type="number" name="age" placeholder="Age" />
+				<button type="button" onClick="postFormHandler(this.form)">Submit POST Request</button>
+			</form>
+		</div>
+	</div>
+	<script>
+		const getForm = document.getElementById("getForm");
+		const postForm = document.getElementById("postForm");
+
+		const result = document.getElementById("results");
+		const type = document.getElementById("type");
+
+		function getFormHandler(form) {
+			const url = "http://127.0.0.1:5000/login?" + new URLSearchParams({ name: form.name.value });
+			type.innerHTML = url + " - GET Request";
+			fetch(
+				"http://127.0.0.1:5000/login?" + new URLSearchParams({ name: form.name.value }), {
+					method: "GET",
+				})
+				.then((response) => {
+					return response.json();
+				})
+				.then((response) => {
+					result.innerHTML = JSON.stringify(response);
+				})
+		}
+
+		function postFormHandler(form) {
+			if (!form.name.value.length || !form.age.value.length) {
+				alert("Please enter a valid name and age");
+				return;
+			}
+			const url = "http://127.0.0.1:5000/login";
+			type.innerHTML = url + " - POST Request";
+			const payload = {
+				name: form.name.value,
+				age: form.age.value,
+			};
+			fetch(url, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(payload)
+				})
+				.then((response) => {
+					return response.json();
+				})
+				.then((response) => {
+					result.innerHTML = JSON.stringify(response);
+				})
+		}
+
+	</script>
+</body>
